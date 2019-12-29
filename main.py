@@ -1,22 +1,23 @@
 import sqlite3
 import sys
+import os
 
 from PyQt5 import uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidget, QTableWidgetItem, QMessageBox
 
-main_uic = 'main.ui'
-path_uic_add = "addEditCoffeeForm.ui"
-
+main_uic = "UI/main.ui"
+path_uic_add = "UI/addEditCoffeeForm.ui"
+db_path = 'data/coffee.sqlite'
 
 class MyApp(QMainWindow):
     global main_uic
-
+    global db_path
     def __init__(self):
         super().__init__()
         uic.loadUi(main_uic, self)
 
-        self.db_conn = sqlite3.connect('coffee.sqlite')
+        self.db_conn = sqlite3.connect(db_path)
         self.db_cursor = self.db_conn.cursor()
 
         if False:
@@ -52,7 +53,7 @@ class AddChangeForm(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.db_conn = sqlite3.connect('coffee.sqlite')
+        self.db_conn = sqlite3.connect(db_path)
         self.db_cursor = self.db_conn.cursor()
         uic.loadUi(path_uic_add, self)
         self.btn_exit.clicked.connect(self.BtnExitReaction)
